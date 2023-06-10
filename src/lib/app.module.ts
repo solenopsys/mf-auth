@@ -11,14 +11,15 @@ import {StatusComponent} from "./status/status.component";
 import {UIControlsModule} from "@solenopsys/ui-controls";
 import {UIFormsModule} from "@solenopsys/ui-forms";
 import {UIQrModule} from "@solenopsys/ui-qr";
-import {createNgxs} from "@solenopsys/fl-storage";
 import {RegisterComponent} from "./register/register.component";
 
 import {InterfaceState, SetTabs, UITemplatesModule,} from "@solenopsys/ui-templates";
-import {Store} from "@ngxs/store";
+import {NgxsModule, NoopNgxsExecutionStrategy, Store} from "@ngxs/store";
 import {ConfirmComponent} from "./confirm/confirm.component";
 import {CryptoModule} from "@solenopsys/fl-crypto";
 import {BootstrapComponent} from "./bootstrap.component";
+import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
+import {NgxsRouterPluginModule} from "@ngxs/router-plugin";
 
 export const PROVIDERS_CONF = [
     {provide: "assets_dir", useValue: ""},
@@ -26,7 +27,26 @@ export const PROVIDERS_CONF = [
     {provide: "logo", useValue: "logo"},
 ];
 
-export const STATE= [InterfaceState]
+export const STATES= [InterfaceState]
+
+export function createNgxs(develop = false, stores = [], forRoot = false): any[] {
+    return [
+        forRoot ? NgxsModule.forRoot(
+                [ ...stores],
+                {
+                    developmentMode: develop,
+                    selectorOptions: {injectContainerState: true},
+                    executionStrategy: NoopNgxsExecutionStrategy
+                }) :
+            NgxsModule.forFeature(
+                [ ...stores],
+            ),
+        NgxsLoggerPluginModule.forRoot(),
+        NgxsRouterPluginModule.forRoot(),
+        //  NgxsReduxDevtoolsPluginModule.forRoot()
+        //   NgxsFormPluginModule.forRoot(),
+    ]
+}
 
 const ROUTERS: Route[] = [
     {
@@ -69,6 +89,7 @@ const PROVIDERS = [...PROVIDERS_CONF];
         UIFormsModule,
         UIControlsModule,
         UITemplatesModule,
+        ...createNgxs(false, STATES, true),
     ],
     declarations: [
         AppComponent,

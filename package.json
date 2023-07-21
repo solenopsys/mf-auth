@@ -2,7 +2,7 @@
   "name": "@solenopsys/fl-auth",
   "version": "0.1.0",
   "scripts": {
-    "build": "ng-packagr -p ng-package.json -c ../../../../tsconfig.packages.json"
+    "build": "xs-pack"
   },
   "peerDependencies": {
     "@solenopsys/fl-crypto": "^0.1.0",

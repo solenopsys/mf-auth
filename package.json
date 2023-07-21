@@ -1,5 +1,5 @@
 {
-  "name": "@solenopsys/fl-auth",
+  "name": "@solenopsys/mf-auth",
   "version": "0.1.0",
   "scripts": {
     "build": "xs-pack"

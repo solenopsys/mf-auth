@@ -1,5 +1,5 @@
 
-export interface RegisterData {
+export type RegisterData = {
     transport: string;
     login: string;
     encryptedKey: string;

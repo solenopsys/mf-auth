@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit{
 
             await this.ss.saveSession(res.publicKey, token);
             //navigate
-            this.router.navigate(['/status/.'], {queryParams: {state: token}})
+            this.router.navigate(['/status'], {queryParams: {state: token}})
             console.log("succes token", token)
 
 

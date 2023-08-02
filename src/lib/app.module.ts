@@ -6,7 +6,6 @@ import {BrowserModule} from "@angular/platform-browser";
 
 import {Route, RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
-import {AppComponent} from "./app.component";
 import {StatusComponent} from "./status/status.component";
 import {UIControlsModule} from "@solenopsys/ui-controls";
 import {UIFormsModule} from "@solenopsys/ui-forms";
@@ -17,17 +16,12 @@ import {InterfaceState, SetTabs, UITemplatesModule,} from "@solenopsys/ui-templa
 import {NgxsModule, NoopNgxsExecutionStrategy, Store} from "@ngxs/store";
 import {ConfirmComponent} from "./confirm/confirm.component";
 import {CryptoModule} from "@solenopsys/fl-crypto";
-import {BootstrapComponent} from "./bootstrap.component";
 import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
 import {NgxsRouterPluginModule} from "@ngxs/router-plugin";
-
-export const PROVIDERS_CONF = [
-    {provide: "assets_dir", useValue: ""},
-    {provide: "mod_name", useValue: "exhibition"},
-    {provide: "logo", useValue: "logo"},
-];
-
-export const STATES= [InterfaceState]
+import {RegisterTemplateComponent} from "./register-template/register-template.component";
+import {UINavigateModule} from "@solenopsys/ui-navigate";
+import {Subject} from "rxjs";
+const $logo = new Subject();
 
 export function createNgxs(develop = false, stores = [], forRoot = false): any[] {
     return [
@@ -51,29 +45,28 @@ export function createNgxs(develop = false, stores = [], forRoot = false): any[]
 const ROUTERS: Route[] = [
     {
         path: "",
-        redirectTo: "login/.",
+        redirectTo: "login",
         pathMatch: 'full'
     },
     {
-        path: "status/.",
+        path: "status",
         component: StatusComponent,
     },
     {
-        path: "confirm/.",
+        path: "confirm",
         component: ConfirmComponent,
     },
     {
-        path: "login/.",
+        path: "login",
         component: LoginComponent,
     },
     {
-        path: "register/.",
+        path: "register",
         component: RegisterComponent,
     },
 
 ];
 
-const PROVIDERS = [...PROVIDERS_CONF];
 
 // noinspection AngularInvalidEntryComponent
 @NgModule({
@@ -84,27 +77,31 @@ const PROVIDERS = [...PROVIDERS_CONF];
         FormsModule,
         BrowserModule.withServerTransition({appId: "solenopsys"}),
         BrowserModule,
-        RouterModule.forRoot(ROUTERS, {initialNavigation: "enabledBlocking"}),
+        RouterModule.forRoot(ROUTERS),
         UIQrModule,
         UIFormsModule,
         UIControlsModule,
         UITemplatesModule,
-        ...createNgxs(false, STATES, true),
+        ...createNgxs(false, [InterfaceState], true),
+        UINavigateModule,
     ],
     declarations: [
-        AppComponent,
-        BootstrapComponent,
+        RegisterTemplateComponent,
         LoginComponent,
         StatusComponent,
         RegisterComponent,
         ConfirmComponent,
 
     ],
-    providers: PROVIDERS,
-    bootstrap: [BootstrapComponent],
+    providers: [...([
+        {provide: "assets_dir", useValue: ""},
+        {provide: "mod_name", useValue: "exhibition"},
+        {provide: "logo", useValue: $logo},
+    ])],
+    bootstrap: [RegisterTemplateComponent],
 })
 export class AppModule {
-    constructor(store: Store, private http: HttpClient) {
+    constructor(private store: Store, private http: HttpClient) {
         store.dispatch(
             new SetTabs([
                 {id: "status", title: "Status"},
@@ -112,5 +109,16 @@ export class AppModule {
                 {id: "register", title: "Register"},
             ])
         );
+    }
+    public setConfigSource(
+        data: { navigate: { [route: string]: { title: string } }, logo: string, title: string },
+        func: any,
+        mapping: { [key: string]: { module:string,data:any } }
+    ) {
+        $logo.next(data.logo)
+
+
+
+
     }
 }

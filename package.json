@@ -4,6 +4,7 @@
   "scripts": {
     "build": "xs-pack"
   },
+  "type": "module",
   "peerDependencies": {
     "@solenopsys/fl-crypto": "^0.1.0",
     "@solenopsys/fl-globals": "^0.1.0",
@@ -13,5 +14,11 @@
     "@solenopsys/ui-qr": "^0.1.0",
     "@solenopsys/ui-templates": "^0.1.0",
     "@solenopsys/ui-utils": "^0.1.0"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "^16.1.6"
+
   }
+
+
 }

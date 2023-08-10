@@ -5,7 +5,7 @@
     "build": "xs-pack"
   },
   "type": "module",
-  "peerDependencies": {
+  "dependencies": {
     "@solenopsys/fl-crypto": "^0.1.0",
     "@solenopsys/fl-globals": "^0.1.0",
     "@solenopsys/fl-storage": "^0.1.0",

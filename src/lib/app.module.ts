@@ -116,9 +116,5 @@ export class AppModule {
         mapping: { [key: string]: { module:string,data:any } }
     ) {
         $logo.next(data.logo)
-
-
-
-
     }
 }

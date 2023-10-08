@@ -11,10 +11,10 @@
     "@solenopsys/fl-storage": "^0.1.0",
     "@solenopsys/ui-controls": "^0.1.0",
     "@solenopsys/ui-forms": "^0.1.0",
+    "@solenopsys/ui-navigate": "^0.1.0",
     "@solenopsys/ui-qr": "^0.1.0",
     "@solenopsys/ui-templates": "^0.1.0",
-    "@solenopsys/ui-utils": "^0.1.0",
-    "@solenopsys/ui-navigate": "^0.1.0"
+    "@solenopsys/ui-utils": "^0.1.0"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^16.1.6"

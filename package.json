@@ -20,6 +20,6 @@
     "@solenopsys/ui-utils": "^0.1.0"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^16.1.6"
+    "@angular/compiler-cli": "^17.0.0"
   }
 }
